@@ -1,0 +1,177 @@
+.insertPhoto_content{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  
+    margin-left: 30px;
+    margin-bottom: 30px;
+    margin-right: 30px;
+    margin-top: 30px;
+  
+    border: 1px solid silver;
+    border-radius: 9px;
+  	border-color: black;
+    background-color: white;
+  }
+ 
+ 
+  .page{
+      display: flex;
+  
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+  
+      background-color:whitesmoke;
+      border-radius: 9px;
+  }
+  
+  body {
+    background-color: #a3a3a3;
+    background-image: url("../resources/images/pattern.png");
+    background-size: 100px;
+   
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .bookcover {
+    background-color:gray;
+    border-radius: 9px;
+    border: 1px solid #738186;
+  
+    width: 960px;
+    height: 1000px;
+  
+    margin: 100px auto;
+  
+    position: relative;
+  }
+  
+  .bookdot{
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+  
+      border-style: dashed;
+      color:whitesmoke;
+  }
+  
+  .home{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .upside{
+    flex:0.1;
+    color: black;
+  
+    font-size: 13px;
+  }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  text-decoration-line: none;
+  color: black;
+}
+
+li {
+  list-style: none;
+}
+
+span {
+  font-size: 5px;
+}
+
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.join {
+  width: 30%;
+  height: 1000px;
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.must {
+  padding: 10px;
+  width: 80%;
+  font-size: 14px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  font-weight: medium;
+}
+	
+
+h2 {
+  color: tomato;
+  font-size: 2em;
+}
+
+.title {
+  margin-top: 10px;
+  width: 80%;
+  color : black;
+}
+
+.title input {
+  width: 100%;
+  height: 30px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid black;
+  outline: none;
+
+}
+
+.content{
+  margin-top: 10px;
+  width: 80%;
+  color : black;
+}
+
+.content input {
+  width: 100%;
+  height: 300px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid black;
+  outline: none;
+
+}
+
+.image {
+  margin-top: 10px;
+  width: 80%;
+  color : black;
+	
+}

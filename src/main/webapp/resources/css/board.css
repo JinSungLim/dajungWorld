@@ -1,0 +1,36 @@
+.board_contents{
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    color: black;
+    font-family: 'Nanum Gothic', sans-serif;
+    overflow-y : scroll;
+    
+}
+.board_title{
+    margin: 10px;
+    height: 35px;
+    font-size: 14px;
+    font-weight:700;
+    line-height: 35px;
+
+    background-color: whitesmoke;
+}
+.board_title_date{
+    font-size: 10px;
+    color: steelblue;
+}
+.board{
+    width: 460px;
+    margin-left: 40px;
+    border-radius: 7px;
+}
+
+.board_text{
+    margin-top: 10px;
+    margin-bottom: 30px;
+    margin-left: 35px;
+    font-size: 14px;
+}

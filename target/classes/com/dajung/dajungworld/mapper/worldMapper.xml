@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dajung.dajungworld.worldMapper">
+
+<insert id="insertMain" parameterType="WorldMainDTO" >
+
+	insert into world_main values(world_main_seq.nextval
+		,#{main_title}
+		,#{main_content}
+		,#{main_image1}
+		,#{member_num}
+		)
+
+</insert>
+
+
+<select id="getMain" parameterType="int" resultType="WorldMemberAllDTO" >
+
+			select 
+			A.*, B.*
+			from 
+			(world_member A inner join world_main B 
+			on A.member_num = B.member_num)
+			where B.member_num =#{member_num}
+
+</select>
+
+<update id = "updateMain" parameterType = "WorldMainDTO">
+
+		update
+		world_main
+		set main_title =#{main_title},
+			 main_content =#{main_content},
+			 main_image1 =#{main_image1}	 			 
+		where main_num =#{main_num}
+		
+</update>
+<select id = "insertPhoto" parameterType="WorldPhotoDTO" >
+
+	insert into world_photo values(world_photo_seq.nextval	
+	,#{photo_title}
+	,#{photo_content}
+	,sysdate		
+	,#{member_num}
+	)
+	
+</select>
+
+<select id = "listPhoto" resultType ="WorldMemberAllDTO" >
+
+	select A.*,B.photo_image1 ,B.photo_image2 ,B.photo_image3 ,B.photo_image4 ,B.photo_image5
+	from world_photo A inner join world_photoImg B 
+	on A.photo_num = B.photo_num order by A.photo_num desc
+
+
+</select>
+
+
+<insert id="insertPhotoImg" parameterType = "WorldPhotoImgDTO">
+		insert into world_photoImg values(#{photo_image1},#{photo_image2},#{photo_image3},#{photo_image4},#{photo_image5},#{photo_num})
+
+</insert>
+
+<select id="getPhotoNum" parameterType="WorldPhotoDTO" resultType="int">
+		
+		select photo_num from world_photo
+		where photo_title =#{photo_title} and photo_content =#{photo_content}
+		
+		
+</select>
+	
+<select id = "getPhoto" parameterType = "int" resultType = "WorldMemberAllDTO">
+		
+		select 
+		A.*,B.*
+		from
+		(world_photo A inner join world_photoImg B 
+		on A.photo_num = B.photo_num)
+		 where A.photo_num =#{photo_num}
+		 
+</select>
+
+<select id="imageList" resultType="worldPhotoImgDTO" parameterType="int">
+		select * from world_photoImg where photo_num = #{photo_num}
+</select>
+
+<update id = "updatePhoto" parameterType = "WorldPhotoDTO">
+		update
+		world_photo
+		set photo_title =#{photo_title},
+			 photo_content =#{photo_content}	 
+		where photo_num =#{photo_num}
+</update>
+	
+<update id="updatePhotoImage" parameterType = "WorldPhotoImgDTO">
+	
+	update world_photoImg
+	
+	set photo_image1 =#{photo_image1},
+		 photo_image2 =#{photo_image2},
+		 photo_image3 =#{photo_image3},
+	 	 photo_image4 =#{photo_image4},
+	 	 photo_image5 =#{photo_image5}
+	
+		where photo_num =#{photo_num}
+
+</update>
+
+<delete id = "deletePhoto" parameterType="int">
+
+		delete from world_photo where photo_num =#{ photo_num }
+		
+</delete>
+	
+<delete id = "deletePhotoImg" parameterType="int">
+		delete from world_photoImg where photo_num =#{ photo_num }
+</delete>  
+	
+<select id = "listBoard" resultType ="WorldMemberAllDTO" >
+
+	select A.*,B.*
+	from world_member A inner join world_board B 
+	on A.member_num = B.member_num order by B.board_num desc
+
+
+</select>
+
+<select id = "insertBoard" resultType ="WorldBoardDTO">
+
+	insert into world_board values(world_board_seq.nextval
+		,#{board_title}
+		,#{board_content}
+		,sysdate
+		,#{board_count}
+		,#{member_num}
+		)
+</select>
+
+<update id = "updateBoard" parameterType = "WorldBoardDTO">
+
+		update
+		world_board	
+		set board_title =#{board_title},
+			 board_content =#{board_content}
+		 
+		where board_num =#{board_num}
+		
+</update>
+
+<select id="getListBoardCount" resultType="int">
+   		select count(*) from world_board
+</select>
+
+<delete id = "deleteBoardList" parameterType="String">
+		delete from world_board where board_num = #{num}
+</delete>
+
+<select id = "getBoard" parameterType = "int" resultType = "WorldMemberAllDTO">
+
+		select 
+		A.*,B.*
+		from
+		world_member A inner join world_board B 
+		on A.member_num = B.member_num
+		where B.board_num=#{ board_num }		
+			
+</select>
+
+<select id= "getBoardNum" parameterType="WorldBoardDTO" resultType="int"  >
+		
+		select board_num from world_board
+		where board_title =#{ board_title }
+		
+</select>
+
+<select id = "searchBoardTitle" parameterType = "String" resultType="WorldMemberAllDTO">
+		select A.*,B.*
+		from
+		world_member A inner join world_board B
+		on A.member_num = B.member_num 
+		where
+		B.board_title like #{searchString}
+</select>
+
+<select id = "searchBoardContent" parameterType = "String" resultType="WorldMemberAllDTO">
+		
+		select A.*,B.*
+		from
+		world_member A inner join world_board B
+		on A.member_num = B.member_num 
+		where
+		B.board_content like #{searchString}
+		
+</select>
+
+	
+<select id = "listReply" resultType ="WorldMemberAllDTO" parameterType="int">
+
+	select A.*,B.*,C.*
+	from world_member A inner join world_board B 
+	on A.member_num = B.member_num 
+	inner join world_reply C
+	on B.board_num = C.board_num
+	where B.board_num =#{board_num}
+	order by C.reply_num desc
+
+</select>
+
+<select id  = "insertReply" resultType = "WorldReplyDTO" parameterType ="int">
+
+	insert into world_reply values(world_reply_seq.nextval	
+	,#{reply_content}
+	,sysdate
+	,#{member_num}
+	,#{board_num}
+	)
+	
+</select>
+
+<select id = "getReply" parameterType = "int" resultType = "WorldMemberAllDTO">
+
+	select A.*,B.*,C.*
+	from world_member A inner join world_board B 
+	on A.member_num = B.member_num 
+	inner join world_reply C
+	on B.board_num = C.board_num
+	where C.reply_num =#{reply_num}
+		
+</select>
+
+<update id = "updateReply" parameterType = "WorldReplyDTO">
+
+		update
+		world_reply
+		set reply_content =#{reply_content},
+		 	 board_num =#{board_num}
+		where reply_num =#{reply_num}
+		
+</update>
+
+
+
+<delete id = "deleteReply" parameterType="int">
+		delete from world_reply where reply_num = #{reply_num}
+</delete>
+
+<update id="plusBoardCount" parameterType="int">
+
+		update world_board set board_count = board_count +1 where board_num=#{board_num}
+		
+</update>
+
+<insert id = "insertVisit" parameterType ="WorldVisitDTO">
+
+	insert into world_visit values (world_visit_seq.nextval
+										,#{visit_content}
+										,sysdate
+										,#{member_num}
+										,#{main_num}
+										)
+
+</insert>
+
+<select id = "listVisit" resultType = "WorldMemberAllDTO" >
+	
+    select A.*,B.*,C.*
+	from world_member A inner join world_main B 
+	on A.member_num = B.member_num 
+	inner join world_visit C
+	on B.main_num = C.main_num
+	order by C.visit_num desc
+
+</select> 
+
+
+
+
+
+
+
+
+<select id="getListVisitCount" resultType="int">
+   		select count(*) from world_visit
+</select>
+
+<select id= "getMainNum" parameterType="WorldMainDTO" resultType="int" >		
+
+		select main_num from world_main
+		where main_title =#{ main_title } and main_content =#{ main_content } and main_image1 =#{ main_image1 }		
+
+</select>
+
+
+<!-- <select id="getListReadBoardCount" resultType="int">
+   		select count(*) from world_board where board_num =# {board_num}
+</select>
+ -->
+
+<delete id = "deleteVisit" parameterType ="int">
+
+	delete from world_visit where visit_num =#{visit_num}
+
+</delete>
+
+<select id = "listFamilyReply" resultType = "WorldMemberAllDTO" >
+	
+    select A.*,B.*
+	from world_member A inner join world_family B 
+	on A.member_num = B.member_num 
+	order by B.family_num desc
+
+</select> 
+
+<insert id = "insertFamilyReply" parameterType ="WorldFamilyDTO" >
+
+	insert into world_family values(world_family_seq.nextval	
+							,#{family_reply}
+							,#{member_num}
+							,sysdate							
+							)
+
+</insert>
+
+<insert id = "setTotalCount" parameterType = "WorldTodayDTO">
+
+	insert into world_today values (sysdate)
+
+</insert>
+
+<select id = "getTotalCount" resultType = "int">
+
+	select count(*) from world_today
+	
+</select>
+
+<select id  = "getTodayCount" resultType ="int">
+
+	select count(*) from world_today where today = sysdate
+
+</select> 
+
+<select id = "getListPhotoCount" resultType = "int">
+
+	select count(*) from world_photo
+	
+</select>
+
+
+
+
+
+</mapper>

@@ -1,0 +1,201 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  text-decoration-line: none;
+  color: black;
+}
+
+li {
+  list-style: none;
+}
+
+span {
+  font-size: 5px;
+}
+
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.join {
+  width: 30%;
+  height: 1000px;
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.must {
+  padding: 10px;
+  width: 80%;
+  font-size: 14px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  font-weight: medium;
+}
+	
+
+h2 {
+  color: tomato;
+  font-size: 2em;
+}
+
+.join_id {
+  margin-top: 10px;
+  width: 80%;
+}
+
+.join_id input {
+  width: 100%;
+  height: 30px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+
+.join_pw {
+  margin-top: 10px;
+  width: 80%;
+}
+
+.join_pw input {
+  width: 100%;
+  height: 30px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.join_checkPw {
+  margin-top: 10px;
+  width: 80%;
+}
+
+.join_checkPw input {
+  width: 100%;
+  height: 30px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.join_name {
+  margin-top: 10px;
+  width: 80%;
+}
+
+.join_name input {
+  width: 100%;
+  height: 30px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.join_email {
+  margin-top: 10px;
+  width: 80%;
+}
+
+.join_email input {
+  width: 100%;
+  height: 30px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.join_hp {
+  margin-top: 10px;
+  width: 80%;
+	
+}
+
+.join_hp input {
+  width: 100%;
+  height: 30px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.join_gender {
+  margin-top: 10px;
+  width: 80%;
+}
+.join_etc {
+  padding: 10px;
+  width: 80%;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+/* .join_submit {
+  margin-top: 30px;
+  width: 30%;
+}
+.join_submit input {
+  width: 70%;
+  height: 30px;
+  border: 0;
+  outline: none;
+  border-radius: 30px;
+  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+  color: white;
+  font-size: 0.5em;
+  letter-spacing: 1px;
+}
+.join_cancel {
+  margin-top: 30px;
+  width: 30%;
+}
+.join_cancel input {
+  width: 70%;
+  height: 30px;
+  border: 0;
+  outline: none;
+  border-radius: 30px;
+  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+  color: white;
+  font-size: 0.5em;
+  letter-spacing: 1px;
+} */
