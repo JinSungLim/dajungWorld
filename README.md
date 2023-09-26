@@ -33,7 +33,7 @@ dajungWorld/src/main/webapp/WEB-INF/spring/root-context.xml 파일은 기능구�
 	 <!--(7/5) navermail설정 -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
      <property name="host" value="smtp.naver.com"/> <!-- 메이서버 호스트 -->
-     <property name="port" value="465"/> <!-- 메이서버 포트번호 -->
+     <property name="port" value=""/> <!-- value 에 자신의 메이서버 포트번호 -->
      <property name="username" value=""/> <!-- value 에 자신의 이메일 아이디 -->
      <property name="password" value=""/> <!-- value 에 자신의 비밀번호 -->
        <!-- 보안연결 SSL과 관련된 설정 -->
