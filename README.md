@@ -1,5 +1,10 @@
 # dajungWorld
 
+<참고>
+https://js-etc.tistory.com/
+https://www.erdcloud.com/u/wjs9276@naver.com
+-------------------------------------------------------------------------------------------------------------------------------------------
+
 dajungWorld/src/main/webapp/WEB-INF/spring/root-context.xml 파일은 기능구현상 저의 이메일주소와 패스워드가 들어가있으므로 커밋하지 않았습니다.
 이 프로젝트 실행을 원하시는 경우 위 경로에 새로운 root-context.xml을 생성해 주신뒤 아래와 같이 복사하여 넣어주세요.
 
