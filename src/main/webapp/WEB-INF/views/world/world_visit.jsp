@@ -9,6 +9,18 @@
 
 <script type="text/javascript">
 
+function insertCheck(){
+	
+	if(document.f.visit_content.value == ""){
+		alert("내용을 입력해주세요.")
+		document.f.visit_content.focus()
+		
+		return false
+	}
+	
+	
+}
+
 function deleteVisit(number){
 	
 	var visit_num = Number(number);
@@ -42,7 +54,7 @@ function deleteVisit(number){
                 <c:forEach var = "dto" items = "${listVisit}">            
                   <div class="visit_title">&emsp;no.${dto.visit_num} <span style="color:mediumblue">${dto.id}</span> <i class="fas fa-home"></i><span class="visit_date">${dto.visit_date}</span>
                   <c:if test ="${memId.id == dto.id}">
-                  <a href = "javascript:deleteVisit('${dto.visit_num}')">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;삭제</a>
+                  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href = "javascript:deleteVisit('${dto.visit_num}')">삭제</a>
                   </c:if>
                   
                   </div>

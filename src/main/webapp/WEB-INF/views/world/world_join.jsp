@@ -119,9 +119,7 @@ function returnMain(){
                 <input type="password" name="join_checkPw" onkeyup ="pwdCheck(this.value) " maxlength="16" placeholder="*비밀번호 확인"> 
             	<span id = "pwd_check"></span>
 				<input type = "hidden" name = "isPwdCheck">
-            </div> 
-            
-            
+            </div>                        
              <div class="join_email">
                 <h4>이메일</h4>
                 <c:if test = "${empty email }">

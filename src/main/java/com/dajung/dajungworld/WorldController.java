@@ -817,11 +817,41 @@ import com.dajung.dajungworld.service.WorldMapper;
 	 	
 	 }
 	
+	@RequestMapping(value = "world_editInfo.do", method = RequestMethod.GET)
+		
+		public String editInfo(HttpServletRequest req) throws ServletRequestBindingException {
+			
+			String id = ServletRequestUtils.getRequiredStringParameter(req, "id");
+			
+			WorldMemberDTO memInfo = memberMapper.getWorldMemberById(id);
+			req.setAttribute("memInfo", memInfo);
+			
+			return "world/world_editInfo";
+		}
+	
+	@RequestMapping(value = "world_editInfo.do" , method = RequestMethod.POST)
+	
+		public String editInfoOk(HttpServletRequest req, @ModelAttribute WorldMemberDTO dto) {
+			
+			int res = worldMapper.updateInfo(dto);		
+			if(res>0) {
+				req.setAttribute("msg", "개인정보가 수정 되었습니다.");
+				req.setAttribute("url", "world_main.do");
+			}else {
+				req.setAttribute("msg", "수정 실패");	
+				req.setAttribute("url", "world_main.do");
+			}
+			return "message";
+		}
 	
 	
 	
 	
-	}
+}
+	
+	
+	
+	
 	
 	
 	

@@ -37,7 +37,7 @@
               </c:if>
               <c:if test="${not empty getMain.main_title}">
               <span class="title">${getMain.main_title}&emsp;&emsp;&emsp;<%-- <input type = "button" value="대문 수정하기" onclick ="location.href='world_editMain.do=${getMain.main_num}'"> --%>
-			  <input type ="button" onclick="javascript:updateMain('${getMain.main_num}')" value ="수정">
+			  <input type ="button" onclick="javascript:updateMain('${getMain.main_num}')" value ="대문수정">
 			  <%-- <a href ="javascript:updateMain('${getMain.main_num}')">수정</a> --%>
 			  </c:if> 
               
@@ -51,7 +51,7 @@
 									<a href="world_logout.do" >
 										로그아웃
 									</a>
-			</c:if>
+			
             </div>
             <div class="home_main" style = "height: 550px;" >
               <div class="profile">
@@ -68,17 +68,21 @@
                 </c:if>
                  <c:if test="${not empty getMain.main_content}">
                     <div class="profile_2">${getMain.main_content}</a><br><br></div>
+                     <div>
+                   <input type ="button" value = "내 정보 수정" onclick = "location.href='world_editInfo.do?id=${memId.id}'">
+                    </div>
+                 </c:if>
                  </c:if>
                 <div class="profile_3">
-                  <div class="profile-dropdown">
+                  <div class="profile-dropdown">           
                     <div class="dropdown-btn">
                       <div class="dropdown-title">Related Link</div>
                       <div class="triangle-down"></div>
                   </div>
+                  
                     <div class="dropdown-content">
                       <a href="https://js-etc.tistory.com/" target="_blank">Devlog</a>
-                      <a href="https://github.com/joseph-106" target="_blank">Github</a>
-                      
+                      <a href="https://github.com/JinSungLim" target="_blank">Github</a>                
                     </div>
                   </div>
                 </div>

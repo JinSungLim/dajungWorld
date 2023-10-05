@@ -229,4 +229,9 @@ public class WorldMapper {
 	 * return sqlSession.selectOne("getListReadBoardCount"); }
 	 */
 
+	public int updateInfo(WorldMemberDTO dto) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("updateInfo", dto);
+	}
+
 }

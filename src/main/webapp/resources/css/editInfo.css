@@ -23,9 +23,10 @@ li {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.login {
+
+.editInfo {
   width: 30%;
-  height: 600px;
+  height: 900px;
   background: white;
   border-radius: 20px;
   display: flex;
@@ -34,6 +35,16 @@ li {
   flex-direction: column;
 }
 
+.join {
+  width: 30%;
+  height: 1000px;
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 h2 {
   color: tomato;
   font-size: 2em;

@@ -39,7 +39,7 @@ function insertCheck(){
 			            </div>
 			            <div class = "content">
 			            <h4>내용을 적어주세요</h4>
-			            <textarea rows="15" cols ="106" width = "80%"name="board_content" maxlength="200" placeholder = "내용은 200자이내로 적어주세요." ></textarea>
+			            <textarea rows="15" cols ="106" width = "80%" name="board_content" maxlength="200" placeholder = "내용은 200자이내로 적어주세요." ></textarea>
 			            </div>
 			            <div>
 			         <input type="submit"  value = "등록">

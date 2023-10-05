@@ -32,7 +32,6 @@
 	
 	<select id="getWorldMemberById" parameterType="String" resultType="WorldMemberDTO">
 		select * from world_member where id = #{id}
-	
 	</select>
 	
 <select id="listUpdateNews" parameterType="String" resultType="WorldMemberAllDTO">
