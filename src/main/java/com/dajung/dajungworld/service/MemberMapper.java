@@ -11,7 +11,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dajung.dajungworld.dto.WorldMainDTO;
 import com.dajung.dajungworld.dto.WorldMemberAllDTO;
 import com.dajung.dajungworld.dto.WorldMemberDTO;
 
@@ -67,9 +66,9 @@ private SqlSession sqlSession;
 		return dto;
 	}
 
-	public List<WorldMemberAllDTO> listUpdateNews() {
+	public List<WorldMemberAllDTO> listUpdateNews(int member_num) {
 		
-		return sqlSession.selectList("listUpdateNews");
+		return sqlSession.selectList("listUpdateNews", member_num);
 		
 	}
 
@@ -106,6 +105,11 @@ private SqlSession sqlSession;
 	public int resetPw(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("resetPw", map);
+	}
+
+	public List<WorldMemberDTO> listMember() {
+	
+		return sqlSession.selectList("listMember");
 	}
 	
 

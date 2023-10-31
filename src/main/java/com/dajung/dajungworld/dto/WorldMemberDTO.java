@@ -9,6 +9,10 @@ public class WorldMemberDTO {
 	private String email;
 	private String gender;
 	private String hp;
+	private int main_num;
+	private String main_title;
+	private String main_content;
+	private String main_image1;
 	
 	
 	public int getMember_num() {
@@ -52,6 +56,30 @@ public class WorldMemberDTO {
 	}
 	public void setHp(String hp) {
 		this.hp = hp;
+	}
+	public int getMain_num() {
+		return main_num;
+	}
+	public void setMain_num(int main_num) {
+		this.main_num = main_num;
+	}
+	public String getMain_title() {
+		return main_title;
+	}
+	public void setMain_title(String main_title) {
+		this.main_title = main_title;
+	}
+	public String getMain_content() {
+		return main_content;
+	}
+	public void setMain_content(String main_content) {
+		this.main_content = main_content;
+	}
+	public String getMain_image1() {
+		return main_image1;
+	}
+	public void setMain_image1(String main_image1) {
+		this.main_image1 = main_image1;
 	}
 
 	

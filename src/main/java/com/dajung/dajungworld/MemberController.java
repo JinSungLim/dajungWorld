@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dajung.dajungworld.dto.WorldMainDTO;
+import com.dajung.dajungworld.dto.WorldBoardDTO;
 import com.dajung.dajungworld.dto.WorldMemberAllDTO;
 import com.dajung.dajungworld.dto.WorldMemberDTO;
 import com.dajung.dajungworld.dto.WorldTodayDTO;
@@ -58,9 +58,8 @@ import com.dajung.dajungworld.service.WorldMapper;
 	
 	@RequestMapping(value = "/world_join_ok.do", method = RequestMethod.POST)
 		public String joinMember(HttpServletRequest req, @ModelAttribute WorldMemberDTO dto) {
-			
+	
 		int res = memberMapper.joinMember(dto);
-		
 		if(res>0) {
 			
 			req.setAttribute("msg","회원가입이 완료되었습니다.");
@@ -85,7 +84,7 @@ import com.dajung.dajungworld.service.WorldMapper;
 
 	// 회원 로그인 기능
 	@RequestMapping("/world_login_ok.do")
-	public ModelAndView world_login(HttpServletRequest req,HttpServletResponse response) throws ServletRequestBindingException  {
+	public ModelAndView world_login(HttpServletRequest req,HttpServletResponse response,@RequestParam(required=false) Map<String, String> map) throws ServletRequestBindingException  {
 		HttpSession session = req.getSession();
 		
 		String id = req.getParameter("login_id");
@@ -98,26 +97,35 @@ import com.dajung.dajungworld.service.WorldMapper;
 		if (res == memberMapper.OK) {
 			
 			WorldMemberDTO dto = memberMapper.getWorldMemberById(id);
-			int member_num = memberMapper.getMemberNum(dto);		
-			List<WorldMemberAllDTO> list = memberMapper.listUpdateNews();
-			WorldMemberAllDTO gdto = worldMapper.getMain(member_num);
-			WorldTodayDTO tdto = new WorldTodayDTO();
 			
-			int setTotalCount = worldMapper.setTotalCount(tdto);
-			int getTotalCount = worldMapper.getTotalCount();
-			int getTodayCount = worldMapper.getTodayCount();
+			int member_num = memberMapper.getMemberNum(dto);	
+			List<WorldMemberAllDTO> list = memberMapper.listUpdateNews(member_num);
+			List<WorldMemberAllDTO> flist = worldMapper.listFamilyReply(member_num);
+			List<WorldMemberDTO> mlist = memberMapper.listMember();
+			
+//			List<WorldMemberAllDTO> listBoard = worldMapper.listBoard(map);
+			
+			
+			WorldMemberDTO gdto = worldMapper.getMain(member_num);
+//			WorldTodayDTO tdto = worldMapper.getToday(member_num);
+//			
+//			int setTotalCount = worldMapper.setTotalCount(tdto);
+			int getTotalCount = worldMapper.getTotalCount(member_num);
+			int getTodayCount = worldMapper.getTodayCount(member_num);
 		
-			int getListBoardCount = worldMapper.getListBoardCount();
-			int getListPhotoCount = worldMapper.getListPhotoCount();
-			int getListVisitCount = worldMapper.getListVisitCount();
+			int getListBoardCount = worldMapper.getListBoardCount(member_num);
+			int getListPhotoCount = worldMapper.getListPhotoCount(member_num);
+			int getListVisitCount = worldMapper.getListVisitCount(member_num);
 					
 			
-//			
+
 //			int board_num = ServletRequestUtils.getIntParameter(req, "board_num");
 //			WorldMemberAllDTO getBoardNews = memberMapper.getBoardNews(board_num);
 //			session.setAttribute("getBoardNews", board_num);
 			
+			session.setAttribute("listMember", mlist);
 			session.setAttribute("listUpdateNews", list);
+			session.setAttribute("listFamilyReply", flist);
 			
 			
 			session.setAttribute("memId", dto);
@@ -125,7 +133,7 @@ import com.dajung.dajungworld.service.WorldMapper;
 //			session.setAttribute("getUpdateNews", dto2);
 			
 			//today
-			session.setAttribute("setTotalCount", setTotalCount);
+//			session.setAttribute("setTotalCount", setTotalCount);
 			session.setAttribute("getTotalCount", getTotalCount);
 			session.setAttribute("getTodayCount", getTodayCount);
 	
@@ -147,10 +155,8 @@ import com.dajung.dajungworld.service.WorldMapper;
 				
 			}
 			response.addCookie(ck);
-			
-			
-			
-			return new ModelAndView("redirect:world_main.do");
+		
+			return new ModelAndView("redirect:world_main.do?member_num="+dto.getMember_num()+"&id="+dto.getId());
 			
 		} else if (res == memberMapper.NOT_ID || res == memberMapper.NOT_PW) {
 			req.setAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");

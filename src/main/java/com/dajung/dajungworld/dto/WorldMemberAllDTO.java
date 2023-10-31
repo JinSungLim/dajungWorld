@@ -2,6 +2,7 @@ package com.dajung.dajungworld.dto;
 
 public class WorldMemberAllDTO {
 
+	//회원정보
 	private int member_num;
 	private String id;
 	private String password;
@@ -9,8 +10,6 @@ public class WorldMemberAllDTO {
 	private String email;
 	private String gender;
 	private String hp;
-	
-	//메인
 	private int main_num;
 	private String main_title;
 	private String main_content;
@@ -55,6 +54,9 @@ public class WorldMemberAllDTO {
 	private int family_num;
 	private String family_reply;
 	private String family_date;
+	
+	//투데이
+	private String today;
 	
 	public int getMember_num() {
 		return member_num;
@@ -283,6 +285,12 @@ public class WorldMemberAllDTO {
 	}
 	public void setFamily_date(String family_date) {
 		this.family_date = family_date;
+	}
+	public String getToday() {
+		return today;
+	}
+	public void setToday(String today) {
+		this.today = today;
 	}
 	
 	

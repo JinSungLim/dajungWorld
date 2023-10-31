@@ -4,32 +4,32 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.dajung.dajungworld.worldMapper">
 
-<insert id="insertMain" parameterType="WorldMainDTO" >
 
-	insert into world_main values(world_main_seq.nextval
-		,#{main_title}
-		,#{main_content}
-		,#{main_image1}
-		,#{member_num}
-		)
+<select id="getMain" parameterType="int" resultType="WorldMemberDTO" >
 
-</insert>
-
-<select id="getMain" parameterType="int" resultType="WorldMemberAllDTO" >
-
-			select 
-			A.*, B.*
-			from 
-			(world_member A inner join world_main B 
-			on A.member_num = B.member_num)
-			where B.member_num =#{member_num}
+			select * from world_member where member_num =#{member_num}
 
 </select>
 
-<update id = "updateMain" parameterType = "WorldMainDTO">
+<!-- <select id="getMainCheck" parameterType="int" resultType="WorldMainDTO" >
+
+			select * from world_main where member_num =#{member_num}
+
+</select> -->
+
+
+
+<select id= "getMainNum" parameterType="WorldMemberDTO" resultType="int" >		
+
+		select main_num from world_member
+		where member_num =#{ member_num }
+
+</select>
+
+<update id = "updateMain" parameterType = "WorldMemberDTO">
 
 		update
-		world_main
+		world_member
 		set main_title =#{main_title},
 			 main_content =#{main_content},
 			 main_image1 =#{main_image1}	 			 
@@ -51,7 +51,7 @@
 
 	select A.*,B.photo_image1 ,B.photo_image2 ,B.photo_image3 ,B.photo_image4 ,B.photo_image5
 	from world_photo A inner join world_photoImg B 
-	on A.photo_num = B.photo_num order by A.photo_num desc
+	on A.photo_num = B.photo_num where A.member_num =#{member_num} order by A.photo_num desc
 
 
 </select>
@@ -121,8 +121,7 @@
 
 	select A.*,B.*
 	from world_member A inner join world_board B 
-	on A.member_num = B.member_num order by B.board_num desc
-
+	on A.member_num = B.member_num where A.member_num =#{member_num} order by B.board_num desc 
 
 </select>
 
@@ -135,6 +134,7 @@
 		,#{board_count}
 		,#{member_num}
 		)
+		
 </select>
 
 <update id = "updateBoard" parameterType = "WorldBoardDTO">
@@ -148,8 +148,8 @@
 		
 </update>
 
-<select id="getListBoardCount" resultType="int">
-   		select count(*) from world_board
+<select id="getListBoardCount" resultType="int" parameterType ="int">
+   		select count(*) from world_board where member_num =#{ member_num }
 </select>
 
 <delete id = "deleteBoardList" parameterType="String">
@@ -170,7 +170,8 @@
 <select id= "getBoardNum" parameterType="WorldBoardDTO" resultType="int"  >
 		
 		select board_num from world_board
-		where board_title =#{ board_title }
+		where board_title =#{board_title}
+		
 		
 </select>
 
@@ -251,6 +252,14 @@
 		
 </update>
 
+<!-- <select id="getBoardReplyCount" resultType = "int">
+			
+   		select count(*) from world_reply where board_num =#{board_num}
+   			
+</select> -->
+
+
+
 <insert id = "insertVisit" parameterType ="WorldVisitDTO">
 
 	insert into world_visit values (world_visit_seq.nextval
@@ -264,26 +273,20 @@
 
 <select id = "listVisit" resultType = "WorldMemberAllDTO" >
 	
-    select A.*,B.*,C.*
-	from world_member A inner join world_main B 
-	on A.member_num = B.member_num 
-	inner join world_visit C
-	on B.main_num = C.main_num
-	order by C.visit_num desc
+    select A.*,B.*
+	from world_member A inner join world_visit B 
+	on A.member_num = B.member_num where A.member_num =#{member_num}
+	order by B.visit_num desc
 
 </select> 
 
-
-<select id="getListVisitCount" resultType="int">
-   		select count(*) from world_visit
-</select>
-
-<select id= "getMainNum" parameterType="WorldMainDTO" resultType="int" >		
-
-		select main_num from world_main
-		where main_title =#{ main_title } and main_content =#{ main_content } and main_image1 =#{ main_image1 }		
+<select id="getListVisitCount" resultType="int" parameterType ="int" >
+   		
+   		select count(*) from world_visit where member_num =#{member_num}
 
 </select>
+
+
 
 
 <!-- <select id="getListReadBoardCount" resultType="int">
@@ -301,8 +304,7 @@
 	
     select A.*,B.*
 	from world_member A inner join world_family B 
-	on A.member_num = B.member_num 
-	order by B.family_num desc
+	on A.member_num = B.member_num where A.member_num =#{member_num} order by B.family_num desc
 
 </select> 
 
@@ -316,15 +318,26 @@
 
 </insert>
 
-<insert id = "setTotalCount" parameterType = "WorldTodayDTO">
+<insert id = "setTotalCount" parameterType = "WorldMemberAllDTO">
 
-	insert into world_today values (sysdate)
+	insert into world_today values (sysdate,#{member_num})
 
 </insert>
 
-<select id = "getTotalCount" resultType = "int">
+<select id="getToday" parameterType="int" resultType="WorldMemberAllDTO" >
 
-	select count(*) from world_today
+			select 
+			A.*, B.*
+			from 
+			(world_member A inner join world_today B 
+			on A.member_num = B.member_num)
+			where B.member_num =#{member_num}
+
+</select>
+
+<select id = "getTotalCount" resultType = "int" parameterType ="int">
+
+	select count(*) from world_today where member_num =#{member_num}
 	
 </select>
 
@@ -334,9 +347,9 @@
 
 </select> 
 
-<select id = "getListPhotoCount" resultType = "int">
+<select id = "getListPhotoCount" resultType = "int" parameterType ="int">
 
-	select count(*) from world_photo
+	select count(*) from world_photo where member_num =#{member_num}
 	
 </select>
 
@@ -353,7 +366,6 @@
 		where id =#{ id }
 		
 </update>
-
 
 
 </mapper>

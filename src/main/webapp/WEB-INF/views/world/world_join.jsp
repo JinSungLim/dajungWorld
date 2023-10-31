@@ -10,7 +10,7 @@
     <title>Sign Up</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="resources/css/join.css">
+    <link rel="stylesheet" href="resources/css/join.css?after">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>  
     <script src = "https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
@@ -189,7 +189,7 @@ function returnMain(){
 		if (idValue.match(isLowercase) != null) {
 			$.ajax({
 				type : "GET",			
-				url : "/dajungworld/idUseCheck",				
+				url : "./idUseCheck",				
 				data: {
 					"id" : idValue
 				},

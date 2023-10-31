@@ -44,6 +44,7 @@
     font-size: 14px;
     border-radius: 3px;
   }
+  
   .updated_news_right{
     display: flex;
     flex-direction: column;

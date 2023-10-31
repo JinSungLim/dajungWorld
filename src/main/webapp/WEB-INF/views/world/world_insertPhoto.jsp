@@ -14,6 +14,9 @@
 		<div class="bookdot">
 			<div class="page">
 			      <div class="insertPhoto_content">
+			      		<input type = "hidden" value ="${memId.id}" name = "id">
+			      		<input type = "hidden" value ="${memId.member_num}" name = "member_num">
+			      		
 			         	<div class = "title">
 						<h4>사진 제목을 지어주세요!</h4>
                 		<input type="text" name="photo_title" maxlength="12"  placeholder ="제목은 12자 이내로 지어주세요">
@@ -70,7 +73,7 @@
 	</div>
 			        <div>
 			         <input type="submit"  value = "등록">
-					 <input type="button"  onclick="javascript:hitory.back()" value = "취소">	
+					 <input type="button"  onclick="javascript:history.back()" value = "취소">	
 			          </div>
 			          
 			           </div>			            

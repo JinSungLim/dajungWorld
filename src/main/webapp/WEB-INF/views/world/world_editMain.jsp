@@ -13,7 +13,7 @@
 		<div class="bookdot">
 			<div class="page">
 			      <div class="insertMain_content">
-			           	<input type="hidden" value="${getMain.main_num}" name="main_num">
+			           	<input type="hidden" value="${memId.main_num}" name="main_num">
 			         	<div class = "title">
 						<h4>대문 제목을 수정해주세요.</h4>
                 		<input type="text" name="main_title" maxlength="12"  placeholder ="제목은 12자 이내로 지어주세요" value ="${getMain.main_title}">
@@ -30,7 +30,7 @@
 							<input type="hidden" name = "main_image2" value = "${getMain.main_image1 }"/>
 						</div>											            
 			        	 <div>
-			         <input type="submit"  value = "수정">
+			         <input type="submit"  value = "수정" >
 					 <input type="button"  onclick= "history.back()" value = "취소">	
 			           </div>			            
 			       </div>

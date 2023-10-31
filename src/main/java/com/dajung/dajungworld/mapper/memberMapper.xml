@@ -13,8 +13,11 @@
 									,#{ password }
 									,#{ email }	
 									,#{ hp }			
-									,#{ gender }	
-							
+									,#{ gender }		
+									,world_main_seq.nextval
+									,''
+									,''
+									,''													
 					)
 	</insert>
 
@@ -34,7 +37,16 @@
 		select * from world_member where id = #{id}
 	</select>
 	
-<select id="listUpdateNews" parameterType="String" resultType="WorldMemberAllDTO">
+	<select id ="listMember" resultType ="WorldMemberDTO">
+	
+		select * from world_member 
+		
+	</select>
+	
+	
+	
+	
+	<select id="listUpdateNews" parameterType="String" resultType="WorldMemberAllDTO">
 		
 		select 
 		E.*
@@ -45,11 +57,9 @@
 		on A.member_num = B.member_num
 		inner join world_board C
 		on A.member_num = C.member_num  order by B.photo_num desc,C.board_num desc )D)E
-		where rn = 1 
-	   
-			
-		
-</select>
+		where rn = 1 and member_num =#{ member_num }
+	  	
+	</select>
 
 <!-- <select id = "getBoardNews" parameterType = "int" resultType = "WorldMemberAllDTO">
 
@@ -67,14 +77,15 @@
 	
 		select id from world_member
 		where member_num = #{member_num} and name =#{name} and email = #{email}
-		and password = #{password}	and hp =#{hp}  and  gender =#{gender}
+		and password = #{password}	and hp =#{hp}  and  gender =#{gender} and main_num =#{main_num}
 		
 	</select>
 	
 	<select id="getMemberNum" parameterType="WorldMemberDTO" resultType="int">
 	
 		select member_num from world_member
-		where id =#{id}
+		where id =#{id} and name =#{name} and password =#{password}
+		and email =#{email} and hp =#{hp} and gender =#{gender} and main_num =#{main_num}
 		
 	</select>
 	

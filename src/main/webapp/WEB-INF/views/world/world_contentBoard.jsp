@@ -26,7 +26,7 @@
 	 var reply_num = Number(number);
 	 var deleteReply = confirm("답글을 삭제하시겠습니까?")
 	 if(deleteReply){
-		 location.href = 'world_deleteReply.do?reply_num='+reply_num;
+		 location.href = "world_deleteReply.do?reply_num="+reply_num;
 	 }
  }
  
@@ -37,7 +37,8 @@
 	<div class="bookcover">
 		<div class="bookdot">
 			<div class="page">
-			      <div class="board_content">	
+			      <div class="board_content">
+			      		<input type="hidden" value="${memId.id}" name="id">		
 			     	    <input type="hidden" value="${getBoard.board_num}" name="board_num">		   
 			         	<div class = "title" > 
 						<h4>제 목</h4>
@@ -81,7 +82,7 @@
 					      <c:if test ="${memId.member_num == getBoard.member_num}">
 			         	<input type="button"  onclick= "location.href='world_editBoard.do?board_num=${getBoard.board_num}'" value = "게시글 수정">			
 			         	</c:if>            		            
-					 	<input type="button"  onclick="location.href='board_main.do'" value = "게시판으로">			
+					 	<input type="button"  onclick="location.href='board_main.do?member_num=${memId.member_num}&id=${memId.id}'" value = "게시판으로">			
 			           </div>			            
 			       </div>
 			       </form>				    			            

@@ -31,6 +31,8 @@ function insertCheck(){
 	<div class="bookcover">
 		<div class="bookdot">
 			<div class="page">
+			 <input type="hidden" value="${memId.id}" name="id"> 
+			 <input type="hidden" value="${memId.member_num}" name="member_num"> 
 			      <div class="insertMain_content">
 			         	<div class = "title">
 						<h4>제목을 입력해주세요</h4>

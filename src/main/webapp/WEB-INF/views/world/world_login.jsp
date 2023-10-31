@@ -41,7 +41,7 @@ function againLogin(){
 	<c:if test="${not empty cookie.id_check.value}">
 		<c:set value="checked" var="checked"/>
 	</c:if>
-    <div class="wrap">
+    <div class="wrap"> 
         <div class="login">
             <h2>Dajung World</h2>
             <div class="login_sns">

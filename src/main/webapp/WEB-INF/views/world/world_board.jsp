@@ -68,16 +68,14 @@ function deleteBoard(){
 	}
 }
 
-
-
 </script>
-
-
 
               <div class="home_contents" style = "height: 550px;" >
                 <div class="board_contents">
                
    <div class = "board_contents" align="center" >
+<%--     <input type="hidden" value="${memId.id}" name="id">  
+    <input type="hidden" value="${memId.member_num}" name="member_num">   --%>
 	<table  width="100%">
 		<tr bgcolor="white" >
 			<th width="5%">
@@ -111,20 +109,7 @@ function deleteBoard(){
   				   <c:if test= "${empty listBoard}">
                  	    <div class="photo_contents" align = "center"><br></br><br>게시판에 등록된 글이 없습니다!</div>
                  </c:if>	
-                 
-		<c:if test="${count >0}">
-		
-				<c:if test="${startPage > pageBlock}">
-					[<a href="board_main.do?pageNum=${startPage - 1}">이전</a>]	
-				</c:if>
-				<c:forEach var="i" begin="${startPage}" end="${endPage}">
-					[<a href="board_main.do?pageNum=${i}">${i}</a>]		
-				</c:forEach>
-				<c:if test="${endPage < pageCount}">
-					[<a href="board_main.do?pageNum=${endPage+1}">다음</a>]
-				</c:if>
-		
-		</c:if>	     
+                     
                          
           <br><br>
   		<form name="f" action="world_boardSearch.do" method="post">
@@ -144,17 +129,13 @@ function deleteBoard(){
               </div>
             </div>
           
-           <div class="menu_bar">       
-            <a href="world_main.do" class="menu_button1">&nbsp;&nbsp;홈</a>
-            <a href="diary_main.do" class="menu_button2">&nbsp;&nbsp;다이어리</a>
-            <a href="photo_main.do" class="menu_button3">&nbsp;&nbsp;사진첩</a>
-            <a href="board_main.do" class="menu_button4">&nbsp;&nbsp;게시판</a>
-            <a href="visit_main.do" class="menu_button5">&nbsp;&nbsp;방명록</a>
+          <div class="menu_bar">       
+            <a href="world_main.do?member_num=${memId.member_num}&id=${memId.id}" class="menu_button1">&nbsp;&nbsp;홈</a>
+            <a href="diary_main.do?member_num=${memId.member_num}&id=${memId.id}" class="menu_button2">&nbsp;&nbsp;Diary</a>
+            <a href="photo_main.do?member_num=${memId.member_num}&id=${memId.id}" class="menu_button3">&nbsp;&nbsp;사진첩</a>
+            <a href="board_main.do?member_num=${memId.member_num}&id=${memId.id}" class="menu_button4">&nbsp;&nbsp;게시판</a>
+            <a href="visit_main.do?member_num=${memId.member_num}&id=${memId.id}&main_num=${memId.main_num}" class="menu_button5">&nbsp;&nbsp;방명록</a>
           </div>
-
-
-
-
 
   </body>
 </html>

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.dajung.dajungworld.dto.WorldBoardDTO;
 import com.dajung.dajungworld.dto.WorldFamilyDTO;
-import com.dajung.dajungworld.dto.WorldMainDTO;
 import com.dajung.dajungworld.dto.WorldMemberAllDTO;
 import com.dajung.dajungworld.dto.WorldMemberDTO;
 import com.dajung.dajungworld.dto.WorldPhotoDTO;
@@ -24,13 +23,9 @@ public class WorldMapper {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public int insertMain(WorldMainDTO dto) {
-		// TODO Auto-generated method stub
-		return sqlSession.insert("insertMain", dto);
-	}
 
-	public WorldMemberAllDTO getMain(int member_num) {
-		WorldMemberAllDTO gdto = sqlSession.selectOne("getMain", member_num);
+	public WorldMemberDTO getMain(int member_num) {
+		WorldMemberDTO gdto = sqlSession.selectOne("getMain", member_num);
 
 		return gdto;
 	}
@@ -40,9 +35,9 @@ public class WorldMapper {
 		return sqlSession.insert("insertPhoto", dto);
 	}
 
-	public List<WorldMemberAllDTO> listPhoto() {
+	public List<WorldMemberAllDTO> listPhoto(int member_num) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("listPhoto");
+		return sqlSession.selectList("listPhoto", member_num);
 	}
 
 	public int getPhotoNum(WorldPhotoDTO dto) {
@@ -86,14 +81,13 @@ public class WorldMapper {
 
 	}
 
-	public int updateMain(WorldMainDTO dto) {
+	public int updateMain(WorldMemberDTO dto) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("updateMain", dto);
 	}
 
-	public List<WorldMemberAllDTO> listBoard(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList("listBoard", map);
+	public List<WorldMemberAllDTO> listBoard(int member_num) {
+		return sqlSession.selectList("listBoard", member_num);
 	}
 
 	public int insertBoard(WorldBoardDTO dto) {
@@ -101,9 +95,9 @@ public class WorldMapper {
 		return sqlSession.insert("insertBoard", dto);
 	}
 
-	public int getListBoardCount() {
+	public int getListBoardCount(int member_num) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("getListBoardCount");
+		return sqlSession.selectOne("getListBoardCount",member_num);
 	}
 
 	public int deleteBoardList(String num) {
@@ -174,19 +168,18 @@ public class WorldMapper {
 		return sqlSession.insert("insertVisit", dto);
 	}
 
-	public List<WorldMemberAllDTO> listVisit(Map<String, String> map) {
+	public List<WorldMemberAllDTO> listVisit(int member_num) {
 
-		return sqlSession.selectList("listVisit", map);
+		return sqlSession.selectList("listVisit",	member_num);
 	}
-
-	public int getListVisitCount() {
+	public int getListVisitCount(int member_num) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("getListVisitCount");
+		return sqlSession.selectOne("getListVisitCount",member_num);
 	}
 
-	public int getMainNum(WorldMainDTO mdto) {
+	public int getMainNum(WorldMemberDTO memDTO) {
 
-		return sqlSession.selectOne("getMainNum", mdto);
+		return sqlSession.selectOne("getMainNum", memDTO);
 	}
 
 	public int deleteVisit(int visit_num) {
@@ -194,9 +187,9 @@ public class WorldMapper {
 		return sqlSession.delete("deleteVisit", visit_num);
 	}
 
-	public List<WorldMemberAllDTO> listFamilyReply() {
+	public List<WorldMemberAllDTO> listFamilyReply(int member_num) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("listFamilyReply");
+		return sqlSession.selectList("listFamilyReply",member_num);
 	}
 
 	public int insertFamilyReply(WorldFamilyDTO dto) {
@@ -210,19 +203,16 @@ public class WorldMapper {
 		return sqlSession.insert("setTotalCount", tdto);
 	}
 
-	public int getTotalCount() {
+	public int getTotalCount(int member_num) {
 
-		return sqlSession.selectOne("getTotalCount");
+		return sqlSession.selectOne("getTotalCount",member_num);
 	}
 
-	public int getTodayCount() {
+	
 
-		return sqlSession.selectOne("getTodayCount"); 
-	}
-
-	public int getListPhotoCount() {
+	public int getListPhotoCount(int member_num) {
 		
-		return sqlSession.selectOne("getListPhotoCount");
+		return sqlSession.selectOne("getListPhotoCount",member_num);
 	}
 	/*
 	 * public int getListReadBoardCount() { // TODO Auto-generated method stub
@@ -233,5 +223,26 @@ public class WorldMapper {
 		// TODO Auto-generated method stub
 		return sqlSession.update("updateInfo", dto);
 	}
+
+	public int getBoardReplyCount(int board_num) {
+
+		return sqlSession.selectOne("getBoardReplyCount", board_num);
+	}
+
+	public WorldTodayDTO getToday(int member_num) {
+		WorldTodayDTO tdto = sqlSession.selectOne("getToday", member_num);
+
+		return tdto;
+	}
+
+	public int getTodayCount(int member_num) {
+		
+		return sqlSession.selectOne("getTodayCount", member_num);
+	}
+
+//	public WorldMainDTO getMainCheck(int member_num) {
+//		// TODO Auto-generated method stub
+//		return sqlSession.selectOne("getMainCheck", member_num);
+//	}
 
 }

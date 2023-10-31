@@ -3,9 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@include file="world_main_top.jsp"%>
 <head>
-<link rel="stylesheet" type= "text/css"  href="resources/css/photo.css" />
-
-
+<link rel="stylesheet" type= "text/css"  href="resources/css/photo.css?after" />
 
 </head>
 <script type="text/javascript">
@@ -31,13 +29,11 @@ function deletePhoto(number){
 }
 </script>
 
-
-
               <div class="home_contents">
-
-                <div class="photo_contents">
+                <div class="photo_contents">                
                 <div align = "right">
                    <td><input type ="button" value ="나만의 사진을 등록해주세요!" onclick = "insertPhoto()"></td>
+                 
                  </div>
              
                  <c:if test= "${empty listPhoto}">
@@ -59,11 +55,11 @@ function deletePhoto(number){
           </div>
           
            <div class="menu_bar">       
-            <a href="world_main.do" class="menu_button1">&nbsp;&nbsp;홈</a>
-            <a href="diary_main.do" class="menu_button2">&nbsp;&nbsp;다이어리</a>
-            <a href="photo_main.do" class="menu_button3">&nbsp;&nbsp;사진첩</a>
-            <a href="board_main.do" class="menu_button4">&nbsp;&nbsp;게시판</a>
-            <a href="visit_main.do" class="menu_button5">&nbsp;&nbsp;방명록</a>
+            <a href="world_main.do?member_num=${memId.member_num}&id=${memId.id}" class="menu_button1">&nbsp;&nbsp;홈</a>
+            <a href="diary_main.do?member_num=${memId.member_num}&id=${memId.id}" class="menu_button2">&nbsp;&nbsp;Diary</a>
+            <a href="photo_main.do?member_num=${memId.member_num}&id=${memId.id}" class="menu_button3">&nbsp;&nbsp;사진첩</a>
+            <a href="board_main.do?member_num=${memId.member_num}&id=${memId.id}" class="menu_button4">&nbsp;&nbsp;게시판</a>
+            <a href="visit_main.do?member_num=${memId.member_num}&id=${memId.id}&main_num=${memId.main_num}" class="menu_button5">&nbsp;&nbsp;방명록</a>
           </div>
 
   </body>

@@ -16,7 +16,7 @@
 		<br></br>
 		<div class="container" >
 		<div align = "right" >
-		<input type="button" value = "뒤로가기" onclick="location.href='photo_main.do'">
+		<input type="button" value = "뒤로가기" onclick="location.href='photo_main.do?=${memId.member_num}&id=${memId.id}'">
 		</div>
 		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 		  <div class="carousel-inner">

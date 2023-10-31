@@ -30,7 +30,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dajung.dajungworld.dto.WorldBoardDTO;
 import com.dajung.dajungworld.dto.WorldFamilyDTO;
-import com.dajung.dajungworld.dto.WorldMainDTO;
 import com.dajung.dajungworld.dto.WorldMemberAllDTO;
 import com.dajung.dajungworld.dto.WorldMemberDTO;
 import com.dajung.dajungworld.dto.WorldPhotoDTO;
@@ -57,69 +56,34 @@ import com.dajung.dajungworld.service.WorldMapper;
 		}
 
 	@RequestMapping("/world_main.do")
-		public ModelAndView worldMain() {
-		List<WorldMemberAllDTO> list = worldMapper.listFamilyReply();
-		return new ModelAndView ("world/world_main", "listFamilyReply", list);
+	public String worldMain(){
+		
+	    
+		return "world/world_main";
 	}
-
+	
 	@RequestMapping("/diary_main.do")
 	public String diaryMain() {
 	
 	return "world/world_diary";
 	}
-	@RequestMapping("/board_main.do")
-	public ModelAndView boardMain(HttpServletRequest req,@RequestParam(required=false) Map<String, String> map) throws ServletRequestBindingException {
-
-		
-		int pageSize = 10;
-		String pageNum = req.getParameter("pageNum");
 	
+	@RequestMapping("/world_memberList.do")
+	public ModelAndView memberList() {
 		
-		if (pageNum == null){
-			pageNum = "1";
-		}
-		
-		WorldBoardDTO dto = new WorldBoardDTO();
-		
-		
-//
-//		if (board_count() > 0) {
-//			int board_count = worldMapper.plusBoardCount(dto);
-//			req.setAttribute("board_count", board_count);
-//						
-//		}
-		int currentPage = Integer.parseInt(pageNum);
-		int startRow = (currentPage - 1) * pageSize + 1;
-		int endRow = startRow + pageSize - 1;
-		int count = worldMapper.getListBoardCount();
+		List<WorldMemberDTO> mlist = memberMapper.listMember();
+		return new ModelAndView("world/world_memberList","listMember", mlist);
+	}
+	
+	@RequestMapping("/board_main.do")
+		public ModelAndView boardMain(HttpServletRequest req) throws ServletRequestBindingException {
+		String id = req.getParameter("id");
+		WorldMemberDTO memDTO = memberMapper.getWorldMemberById(id);
+	    int member_num = memberMapper.getMemberNum(memDTO);
+
 			
-		if (endRow>count) endRow = count;
-		List<WorldMemberAllDTO> list = null;
-		
-		
-		if(count > 0) {
-			
-			map = new HashMap<>();
-			map.put("start", String.valueOf(startRow));
-			map.put("end", String.valueOf(endRow));
-			
-			list = worldMapper.listBoard(map);
-			int pageCount = count/pageSize + (count%pageSize==0 ? 0 : 1);
-			int pageBlock = 5;
-			int startPage = (currentPage-1)/pageBlock * pageBlock + 1;
-			int endPage = startPage + pageBlock - 1;
-			
-			if (endPage > pageCount) endPage = pageCount;
-			
-			req.setAttribute("startPage", startPage);
-			req.setAttribute("endPage", endPage);
-			req.setAttribute("pageBlock", pageBlock);
-			req.setAttribute("pageCount", pageCount);
-		}
-		int rowNum = count - (currentPage - 1) * pageSize;
-		req.setAttribute("count", count);
-		req.setAttribute("rowNum", rowNum);
-		
+		List<WorldMemberAllDTO> list = worldMapper.listBoard(member_num);
+	
 		
 		return new ModelAndView("world/world_board","listBoard", list);
 		
@@ -127,128 +91,102 @@ import com.dajung.dajungworld.service.WorldMapper;
 	
 	
 	@RequestMapping("/photo_main.do")	
-	public ModelAndView photoMain() {
-		List<WorldMemberAllDTO> list = worldMapper.listPhoto();
-	return new ModelAndView("world/world_photo","listPhoto", list);
+	public ModelAndView photoMain(HttpServletRequest req) {
+		
+		String id = req.getParameter("id");
+		WorldMemberDTO memDTO = memberMapper.getWorldMemberById(id);
+	    int member_num = memberMapper.getMemberNum(memDTO);
+		List<WorldMemberAllDTO> list = worldMapper.listPhoto(member_num);
+		return new ModelAndView("world/world_photo","listPhoto", list);
+	
 	}
 	
 	
 	@RequestMapping("/visit_main.do")	
-	public ModelAndView visitMain(HttpServletRequest req,@RequestParam(required=false) Map<String, String> map) throws ServletRequestBindingException {
-	
-		int pageSize = 5;
-		String pageNum = req.getParameter("pageNum");
-	
-		if(pageNum == null){
-			pageNum = "1";
-		}
-		
-		WorldVisitDTO dto = new WorldVisitDTO();
-		
-		int currentPage = Integer.parseInt(pageNum);
-		int startRow = (currentPage - 1) * pageSize + 1;
-		int endRow = startRow + pageSize - 1;
-		int count = worldMapper.getListVisitCount();
-			
-		if (endRow>count) endRow = count;
-		List<WorldMemberAllDTO> list = null;
-		
-		
-		if(count > 0) {
-			
-			map = new HashMap<>();
-			map.put("start", String.valueOf(startRow));
-			map.put("end", String.valueOf(endRow));
-			
-			list = worldMapper.listVisit(map);
-			int pageCount = count/pageSize + (count%pageSize==0 ? 0 : 1);
-			int pageBlock = 5;
-			int startPage = (currentPage-1)/pageBlock * pageBlock + 1;
-			int endPage = startPage + pageBlock - 1;
-			
-			if (endPage > pageCount) endPage = pageCount;
-			
-			req.setAttribute("startPage", startPage);
-			req.setAttribute("endPage", endPage);
-			req.setAttribute("pageBlock", pageBlock);
-			req.setAttribute("pageCount", pageCount);
-		}
-		int rowNum = count - (currentPage - 1) * pageSize;
-		req.setAttribute("count", count);
-		req.setAttribute("rowNum", rowNum);
+	public ModelAndView visitMain(HttpServletRequest req) throws ServletRequestBindingException {
+
+		String id = req.getParameter("id");
+		int main_num = ServletRequestUtils.getIntParameter(req, "main_num");
+		WorldMemberDTO memDTO = memberMapper.getWorldMemberById(id);
+	    int member_num = memberMapper.getMemberNum(memDTO);
+	    
+		List<WorldMemberAllDTO> list = worldMapper.listVisit(member_num);
 		
 	return new ModelAndView("world/world_visit","listVisit", list);
 	
 	}
 	
-	@RequestMapping(value = "/world_insertMain.do" , method = RequestMethod.GET)
-	public String insertMain(HttpServletRequest req,@ModelAttribute WorldMemberDTO dto)  {
-		
-//		int member_num = memberMapper.getMemberNum(dto);
-//		member_num = req.getParameter("member_num");
-		return "world/world_insertMain";
-	}
+//	@RequestMapping(value = "/world_insertMain.do" , method = RequestMethod.GET)
+//	public String insertMain(HttpServletRequest req,@ModelAttribute WorldMemberDTO dto) throws ServletRequestBindingException  {
+//		
+//		
+//		int main_num = ServletRequestUtils.getIntParameter(req, "main_num");
+//		
+//		return "world/world_insertMain";
+//	}
 	
 
-	
-	@RequestMapping(value = "/world_insertMain.do" , method = RequestMethod.POST)
-	public String insertMainOk(HttpServletRequest req, @ModelAttribute WorldMainDTO dto,  BindingResult result ) throws IOException{
-		
-		System.out.println("여긴오니?");
-//		WorldMemberDTO memDTO = new WorldMemberDTO();
-		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;		
-		MultipartFile mf = mr.getFile("main_image1");
-		String main_image1 = mf.getOriginalFilename();
-		int member_num = 41;
-
-		//int member_num = memberMapper.getMemberNum(memDTO);
-				
-		if(result.hasErrors()) {
-			dto.setMain_image1(main_image1);
-		}
-		dto.setMember_num(member_num);
-		int res = worldMapper.insertMain(dto);
-		System.out.println("member_num: " + member_num);
-		
-		HttpSession session = req.getSession();
-		String upPath = session.getServletContext().getRealPath("/resources/images");
-	
-		File file = new File(upPath, main_image1);
-		if (mf.getSize() != 0) {
-			if (!file.exists())
-				file.mkdirs();
-			try {
-				mf.transferTo(file);
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-		}
-		if(res>0) {
-			
-			System.out.println(member_num);
-			req.setAttribute("msg", "메인 정보가 수정되었습니다.");
-			req.setAttribute("url", "world_main.do");
-			
-		}else {
-			req.setAttribute("msg", "메인 정보수정이 실패 하였습니다..");
-			req.setAttribute("url", "world_insertMain.do");
-		}
-		
-		return "message";
-		
-		
-	}
+//	
+//	@RequestMapping(value = "/world_insertMain.do" , method = RequestMethod.POST)
+//	public String insertMainOk(HttpServletRequest req, @ModelAttribute WorldMDTO dto,  BindingResult result ) throws IOException{
+//		
+//		
+//		String id = req.getParameter("id");
+//		WorldMemberDTO memDTO = memberMapper.getWorldMemberById(id);
+//		int member_num = memberMapper.getMemberNum(memDTO);
+//		
+//		
+//		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;		
+//		MultipartFile mf = mr.getFile("main_image1");
+//		String main_image1 = mf.getOriginalFilename();
+//					
+//		if(result.hasErrors()) {
+//			dto.setMain_image1(main_image1);
+//		}
+//		dto.setMember_num(member_num);
+//		int res = worldMapper.insertMain(dto);
+//		
+//		HttpSession session = req.getSession();
+//		String upPath = session.getServletContext().getRealPath("/resources/images");
+//	
+//		File file = new File(upPath, main_image1);
+//		if (mf.getSize() != 0) {
+//			if (!file.exists())
+//				file.mkdirs();
+//			try {
+//				mf.transferTo(file);
+//			} catch (IllegalStateException | IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		if(res>0) {
+//		
+//			req.setAttribute("msg", "메인 정보가 등록되었습니다. 다시 로그인 해주세요.");
+//			req.setAttribute("url", "world_login.do");
+//			
+//		}else {
+//			req.setAttribute("msg", "메인 정보수정이 실패 하였습니다..");
+//			req.setAttribute("url", "world_insertMain.do");
+//		}
+//		
+//		return "message";
+//		
+//		
+//	}
+//	
 	
 	@RequestMapping(value = "/world_editMain.do", method = RequestMethod.GET)
 	public String editMain(HttpServletRequest req) throws ServletRequestBindingException {
 
+		
 		int main_num = ServletRequestUtils.getIntParameter(req, "main_num");
 		
 		return "world/world_editMain";
 	}
 	
 	@RequestMapping(value = "/world_editMain.do", method = RequestMethod.POST)
-	public String editMainOk(HttpServletRequest req, @ModelAttribute WorldMainDTO dto,BindingResult result) throws IllegalStateException, IOException {
+	public String editMainOk(HttpServletRequest req, @ModelAttribute WorldMemberDTO dto,BindingResult result) throws IllegalStateException, IOException {
 	
 
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
@@ -268,8 +206,8 @@ import com.dajung.dajungworld.service.WorldMapper;
 		int res = worldMapper.updateMain(dto);
 		if(res>0) {
 			
-			req.setAttribute("msg", "수정이 정상적으로 완료되었습니다.");
-			req.setAttribute("url", "world_main.do");
+			req.setAttribute("msg", "수정이 정상적으로 완료되었습니다. 다시 로그인해주세요.");
+			req.setAttribute("url", "world_login.do");
 			
 		}else {
 			
@@ -297,9 +235,9 @@ import com.dajung.dajungworld.service.WorldMapper;
 		Iterator<String> it = (Iterator<String>) mr.getFileNames();
 		String upPath = req.getServletContext().getRealPath("/resources/images");
 		
-		int member_num = 41;
-//		WorldMemberDTO memDTO = new WorldMemberDTO();
-//		int member_num = memberMapper.getMemberNum(memDTO);
+		String id = req.getParameter("id");
+		WorldMemberDTO memDTO = memberMapper.getWorldMemberById(id);
+		int member_num = memberMapper.getMemberNum(memDTO);
 		
 		dto.setMember_num(member_num);
 
@@ -362,7 +300,7 @@ import com.dajung.dajungworld.service.WorldMapper;
 		
 			int res2 = worldMapper.insertPhotoImg(imgDTO);
 			req.setAttribute("msg", "사진이 등록되었습니다.");
-			req.setAttribute("url", "photo_main.do");
+			req.setAttribute("url", "photo_main.do?member_num="+dto.getMember_num()+"&id="+memDTO.getId());
 			
 		} else {
 			req.setAttribute("msg", "사진 등록 실패");
@@ -375,6 +313,10 @@ import com.dajung.dajungworld.service.WorldMapper;
 			
 	@RequestMapping(value = "/world_editPhoto.do",method = RequestMethod.GET)
 	public String editPhoto(HttpServletRequest req) throws ServletRequestBindingException{
+		
+		
+		
+		
 		int photo_num = ServletRequestUtils.getIntParameter(req, "photo_num");
 		WorldMemberAllDTO dto = worldMapper.getPhoto(photo_num);
 				
@@ -516,7 +458,12 @@ import com.dajung.dajungworld.service.WorldMapper;
 	
 	@RequestMapping("/world_deletePhoto.do")
 	public String deletePhoto(HttpServletRequest req,@ModelAttribute WorldPhotoDTO dto) throws ServletRequestBindingException{
+		
 		int photo_num = ServletRequestUtils.getIntParameter(req, "photo_num");
+		
+//		String id = req.getParameter("id");
+//		WorldMemberDTO memDTO = memberMapper.getWorldMemberById(id);
+//		int member_num = memberMapper.getMemberNum(memDTO);
 		
 		int res = worldMapper.deletePhoto(photo_num);
 		WorldPhotoImgDTO imgDTO = new WorldPhotoImgDTO();
@@ -525,7 +472,7 @@ import com.dajung.dajungworld.service.WorldMapper;
 			
 			worldMapper.deletePhotoImg(photo_num);		
 			req.setAttribute("msg", "해당 사진을 삭제하였습니다.");
-			req.setAttribute("url", "photo_main.do");
+			req.setAttribute("url", "world_main.do");
 			
 		}else {
 			
@@ -570,9 +517,10 @@ import com.dajung.dajungworld.service.WorldMapper;
 	@RequestMapping(value ="/world_insertBoard.do", method = RequestMethod.POST)
 	public String insertBoardOK(HttpServletRequest req,@ModelAttribute WorldBoardDTO dto) {
 		
-//		WorldMemberDTO memDTO = new WorldMemberDTO();
-		int member_num = 41;
-//		int member_num = memberMapper.getMemberNum(memDTO);
+		 String id = req.getParameter("id");		 
+		 WorldMemberDTO memDTO = memberMapper.getWorldMemberById(id);
+//		int member_num = 41;
+		int member_num = memberMapper.getMemberNum(memDTO);
 		dto.setMember_num(member_num);
 		
 		int res = worldMapper.insertBoard(dto);
@@ -580,7 +528,7 @@ import com.dajung.dajungworld.service.WorldMapper;
 		if(res>0) {
 			
 			req.setAttribute("msg", "게시글이 등록되었습니다.");
-			req.setAttribute("url","board_main.do");
+			req.setAttribute("url","board_main.do?member_num="+dto.getMember_num()+"&id="+memDTO.getId());
 			
 		}else {
 			
@@ -612,8 +560,9 @@ import com.dajung.dajungworld.service.WorldMapper;
 						 
 		 	int board_num = ServletRequestUtils.getIntParameter(req, "board_num");
 		 
-			int plus_board_count = worldMapper.plusBoardCount(board_num);		
-		 	WorldMemberAllDTO getBoard = worldMapper.getBoard(board_num);
+			int plus_board_count = worldMapper.plusBoardCount(board_num);	
+			
+		 	WorldMemberAllDTO getBoard = worldMapper.getBoard(board_num);	
 			List<WorldMemberAllDTO> list = worldMapper.listReply(board_num);
 	
 			req.setAttribute("plus_board_count", plus_board_count);
@@ -627,9 +576,11 @@ import com.dajung.dajungworld.service.WorldMapper;
 	 @RequestMapping(value = "/world_replyBoard.do", method = RequestMethod.POST)
 	 	public String replyBoard(HttpServletRequest req, @ModelAttribute WorldReplyDTO dto,@ModelAttribute WorldBoardDTO bdto) throws ServletRequestBindingException {
 		 
-		
-		 int board_num = worldMapper.getBoardNum(bdto);
-		 int member_num = 41;
+		 String id = req.getParameter("id");		 
+		 WorldMemberDTO memDTO = memberMapper.getWorldMemberById(id);
+//		 int member_num = 41;
+		 int member_num = memberMapper.getMemberNum(memDTO);
+		 int board_num = worldMapper.getBoardNum(bdto);	
 		 dto.setMember_num(member_num);
 		 dto.setBoard_num(board_num);
 		 int res = worldMapper.insertReply(dto);
@@ -637,7 +588,7 @@ import com.dajung.dajungworld.service.WorldMapper;
 		 if(res>0) {
 	
 			 req.setAttribute("msg", "답글이 등록되었습니다");
-			 req.setAttribute("url", "world_contentBoard.do?board_num=" + dto.getBoard_num());
+			 req.setAttribute("url", "world_contentBoard.do?board_num="+dto.getBoard_num());
 			 
 			 
 		 }else {
@@ -683,26 +634,22 @@ import com.dajung.dajungworld.service.WorldMapper;
 	 
 	 	@RequestMapping("/world_deleteReply.do")
 	 	public String deleteReply(HttpServletRequest req,@ModelAttribute WorldReplyDTO dto,@ModelAttribute WorldBoardDTO bdto) throws ServletRequestBindingException {
+	 		
+		
 //	 		int board_num = worldMapper.getBoardNum(bdto);
 //	 		dto.setBoard_num(board_num);
-	 			 		
-	 		int reply_num = ServletRequestUtils.getIntParameter(req, "reply_num");
-	 		System.out.println("board_num: "+ dto.getBoard_num());	
-	 		int res = worldMapper.deleteReply(reply_num);
 	 		
+	 		int reply_num = ServletRequestUtils.getIntParameter(req, "reply_num");	
+	 		int res = worldMapper.deleteReply(reply_num);	 		
 	 		if(res>0) {
 	 			req.setAttribute("msg", "답글이 삭제되었습니다");
-	 			req.setAttribute("url","world_contentBoard.do?board_num="+dto.getBoard_num());
+	 			req.setAttribute("url", "board_main.do");
 	 		}else {
 	 			req.setAttribute("msg", "답글 삭제실패");
-	 			req.setAttribute("url","world_contentBoard.do");
-	 			
+	 			req.setAttribute("url","world_contentBoard.do"); 			
 	 		}
 	 		return "message";
-	 	}
-	 
-	 
-
+	 	}	 
 		@RequestMapping(value="/world_boardSearch.do", method = RequestMethod.POST)
 		public String boardSearch(String search, String searchString, HttpServletRequest req,
 												@RequestParam(required = false) Map<String, String> map) {
@@ -759,12 +706,13 @@ import com.dajung.dajungworld.service.WorldMapper;
 		}
 		
 	 @RequestMapping(value = "world_insertVisit.do", method = RequestMethod.POST)
-	 	public String insertVisit(HttpServletRequest req,@ModelAttribute WorldVisitDTO vdto,@ModelAttribute WorldMainDTO mdto) {
-		
-//		 int main_num = worldMapper.getMainNum(mdto);
-		 int main_num = 61;
-		 int member_num = 41;
+	 	public String insertVisit(HttpServletRequest req,@ModelAttribute WorldVisitDTO vdto,@RequestParam(required=false) Map<String, String> map) {
 		 
+		 String id = req.getParameter("id");
+		 WorldMemberDTO memDTO = memberMapper.getWorldMemberById(id);
+		 int member_num = memberMapper.getMemberNum(memDTO);	
+		 int main_num = worldMapper.getMainNum(memDTO);
+		
 		 vdto.setMember_num(member_num);
 		 vdto.setMain_num(main_num);
 		 
@@ -772,7 +720,7 @@ import com.dajung.dajungworld.service.WorldMapper;
 		 
 		 if(res>0) {
 			 req.setAttribute("msg", "방명록을 등록하였습니다.");
-			 req.setAttribute("url", "visit_main.do");
+			 req.setAttribute("url", "visit_main.do?member_num="+vdto.getMember_num()+"&id="+memDTO.getId()+"&main_num="+vdto.getMain_num());
 		 }else {
 			 req.setAttribute("msg", "등록 실패");
 			 req.setAttribute("url", "visit_main.do");			 
@@ -783,13 +731,13 @@ import com.dajung.dajungworld.service.WorldMapper;
 	 
 	 @RequestMapping("world_deleteVisit.do")
 	 public String deleteVisit(HttpServletRequest req,@ModelAttribute WorldVisitDTO dto) throws ServletRequestBindingException {
-		 
+	
 		 int visit_num = ServletRequestUtils.getIntParameter(req, "visit_num");
 		 int res = worldMapper.deleteVisit(visit_num);
 		 
 		 if(res>0) {
 			 req.setAttribute("msg", "게시글이 삭제되었습니다.");
-			 req.setAttribute("url", "visit_main.do");
+			 req.setAttribute("url", "world_main.do");
 		 }else {
 			 req.setAttribute("msg", "삭제 실패");
 			 req.setAttribute("url", "visit_main.do");
@@ -800,14 +748,17 @@ import com.dajung.dajungworld.service.WorldMapper;
 	 
 	 @RequestMapping(value = "world_insertFamilyReply.do", method = RequestMethod.POST)
 	 public String insertFamilyReply(HttpServletRequest req,@ModelAttribute WorldFamilyDTO dto) {
-		 int member_num = 41;
+		
+		 String id = req.getParameter("id");
+		 WorldMemberDTO memDTO = memberMapper.getWorldMemberById(id);
+		 int member_num = memberMapper.getMemberNum(memDTO);
 		 dto.setMember_num(member_num);
 		 
 		 int res = worldMapper.insertFamilyReply(dto);
 		 if(res>0) {
 			 
 			 req.setAttribute("msg", "일촌평을 등록하였습니다.");
-			 req.setAttribute("url", "world_main.do");
+			 req.setAttribute("url", "world_main.do?member_num="+dto.getMember_num()+"&id="+memDTO.getId());
 		 }else {
 			 req.setAttribute("msg", "삭제 실패");
 			 req.setAttribute("url", "world_main.do");
@@ -821,8 +772,7 @@ import com.dajung.dajungworld.service.WorldMapper;
 		
 		public String editInfo(HttpServletRequest req) throws ServletRequestBindingException {
 			
-			String id = ServletRequestUtils.getRequiredStringParameter(req, "id");
-			
+			String id = ServletRequestUtils.getRequiredStringParameter(req, "id");			
 			WorldMemberDTO memInfo = memberMapper.getWorldMemberById(id);
 			req.setAttribute("memInfo", memInfo);
 			
